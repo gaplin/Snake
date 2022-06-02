@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import snake.game.SnakeGame;
+import snake.utils.Assets;
 
 public class GameScreen implements Screen {
     private final SnakeGame _game;
@@ -12,7 +13,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(SnakeGame game) {
         _game = game;
-        _texture = new Texture("head.png");
+        _texture = game.assets().manager().get(Assets.headTexture);
     }
     @Override
     public void show() {
@@ -23,9 +24,9 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
-        _game.batch.begin();
-        _game.batch.draw(_texture, Gdx.graphics.getWidth() / 2.0f, (float)Gdx.graphics.getHeight() / 2.0f);
-        _game.batch.end();
+        _game.batch().begin();
+        _game.batch().draw(_texture, Gdx.graphics.getWidth() / 2.0f, (float)Gdx.graphics.getHeight() / 2.0f);
+        _game.batch().end();
     }
 
     @Override
@@ -50,6 +51,5 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        _texture.dispose();
     }
 }
