@@ -1,19 +1,18 @@
 package snake.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
-import snake.game.SnakeGame;
-import snake.utils.Assets;
+import snake.SnakeGame;
+import snake.game.entities.cells.Cell;
+import snake.game.entities.cells.TerrainCell;
 
 public class GameScreen implements Screen {
     private final SnakeGame _game;
-    private final Texture _texture;
+    private final Cell _cell;
 
     public GameScreen(SnakeGame game) {
         _game = game;
-        _texture = Assets.getInstance().get(Assets.headTexture);
+        _cell = new TerrainCell(5, 5);
     }
     @Override
     public void show() {
@@ -25,7 +24,7 @@ public class GameScreen implements Screen {
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
         _game.batch().begin();
-        _game.batch().draw(_texture, Gdx.graphics.getWidth() / 2.0f, (float)Gdx.graphics.getHeight() / 2.0f);
+        _cell.draw(_game.batch());
         _game.batch().end();
     }
 

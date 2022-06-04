@@ -1,4 +1,4 @@
-package snake.game;
+package snake;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
