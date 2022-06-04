@@ -12,19 +12,16 @@ public class SnakeGame extends Game {
 
 	@Override
 	public void create () {
-		_assets = new Assets();
+		_assets = Assets.getInstance();
 
 		_assets.loadSnakeTextures();
-		_assets.manager().finishLoading();
+		_assets.finishLoading();
 
 		_batch = new SpriteBatch();
 
 		setScreen(new GameScreen(this));
 	}
 
-	public Assets assets() {
-		return _assets;
-	}
 	public SpriteBatch batch() {
 		return _batch;
 	}

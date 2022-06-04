@@ -13,7 +13,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(SnakeGame game) {
         _game = game;
-        _texture = game.assets().manager().get(Assets.headTexture);
+        _texture = Assets.getInstance().get(Assets.headTexture);
     }
     @Override
     public void show() {
