@@ -1,30 +1,27 @@
 package snake.screens;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.utils.ScreenUtils;
 import snake.SnakeGame;
-import snake.game.entities.cells.Cell;
-import snake.game.entities.cells.TerrainCell;
+import snake.game.entities.Board;
+
+import static snake.utils.GlobalVariables.*;
 
 public class GameScreen implements Screen {
     private final SnakeGame _game;
-    private final Cell _cell;
+
+    private final Board _board = new Board(WIDTH / CELL_WIDTH, HEIGHT / CELL_HEIGHT);
 
     public GameScreen(SnakeGame game) {
         _game = game;
-        _cell = new TerrainCell(5, 5);
     }
     @Override
     public void show() {
-
     }
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0.2f, 1);
-
         _game.batch().begin();
-        _cell.draw(_game.batch());
+        _board.draw(_game.batch());
         _game.batch().end();
     }
 

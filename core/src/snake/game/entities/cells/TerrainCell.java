@@ -1,10 +1,7 @@
 package snake.game.entities.cells;
 
-public class TerrainCell extends Cell {
-    public TerrainCell() {
-        super();
-    }
-    public TerrainCell(float x, float y) {
+public abstract class TerrainCell extends Cell {
+    protected TerrainCell(float x, float y) {
         super(x, y);
     }
 }

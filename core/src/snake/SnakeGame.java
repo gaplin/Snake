@@ -14,7 +14,7 @@ public class SnakeGame extends Game {
 	public void create () {
 		_assets = Assets.getInstance();
 
-		_assets.loadSnakeTextures();
+		_assets.load();
 		_assets.finishLoading();
 
 		_batch = new SpriteBatch();
