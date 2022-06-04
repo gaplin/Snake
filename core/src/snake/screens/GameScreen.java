@@ -2,17 +2,17 @@ package snake.screens;
 
 import com.badlogic.gdx.Screen;
 import snake.SnakeGame;
-import snake.game.entities.Board;
+import snake.game.GameManager;
 
-import static snake.utils.GlobalVariables.*;
+
 
 public class GameScreen implements Screen {
     private final SnakeGame _game;
-
-    private final Board _board = new Board(WIDTH / CELL_WIDTH, HEIGHT / CELL_HEIGHT);
+    private final GameManager _gameManager;
 
     public GameScreen(SnakeGame game) {
         _game = game;
+        _gameManager = new GameManager(_game.batch());
     }
     @Override
     public void show() {
@@ -20,8 +20,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        _gameManager.step(delta);
+
         _game.batch().begin();
-        _board.draw(_game.batch());
+        _gameManager.render();
         _game.batch().end();
     }
 

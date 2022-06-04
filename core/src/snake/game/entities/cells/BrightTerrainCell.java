@@ -2,7 +2,7 @@ package snake.game.entities.cells;
 
 public class BrightTerrainCell extends TerrainCell{
 
-    public BrightTerrainCell(float x, float y) {
-        super(x, y);
+    public BrightTerrainCell(int gridX, int gridY) {
+        super(gridX, gridY);
     }
 }

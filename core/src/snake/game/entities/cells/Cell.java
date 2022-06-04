@@ -1,40 +1,33 @@
 package snake.game.entities.cells;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import snake.utils.Assets;
-import snake.utils.GlobalVariables;
+import snake.utils.Helper;
+
+import static snake.utils.GlobalVariables.CELL_HEIGHT;
+import static snake.utils.GlobalVariables.CELL_WIDTH;
 
 public abstract class Cell {
-    protected final Rectangle _cell = new Rectangle(0, 0, GlobalVariables.CELL_WIDTH, GlobalVariables.CELL_HEIGHT);
-    protected final Texture texture = Assets.getInstance().getTexture(this);
+    protected final Sprite _sprite = new Sprite(Assets.getInstance().getTexture(this), CELL_WIDTH, CELL_HEIGHT);
 
-    protected Cell(float x, float y) {
-        _cell.setPosition(x, y);
+    protected Cell(int gridX, int gridY) {
+        setPosition(gridX, gridY);
     }
 
-    protected void setPosition(float x, float y) {
-        _cell.setPosition(x, y);
-    }
-
-    protected void setX(float x) {
-        _cell.setX(x);
-    }
-
-    protected void setY(float y) {
-        _cell.setY(y);
+    protected void setPosition(int gridX, int gridY) {
+        var posInPixels = Helper.gridTpPixels(gridX, gridY);
+        _sprite.setPosition(posInPixels.x, posInPixels.y);
     }
 
     public float getX() {
-        return _cell.getX();
+        return _sprite.getX();
     }
-
     public float getY() {
-        return _cell.getY();
+        return _sprite.getY();
     }
 
     public void draw(SpriteBatch batch) {
-        batch.draw(texture, _cell.x, _cell.y, _cell.width, _cell.height);
+        _sprite.draw(batch);
     }
 }

@@ -1,10 +1,13 @@
 package snake.game.entities.cells;
 
 public abstract class SnakeCell extends Cell{
-    protected SnakeCell(float x, float y) {
-        super(x, y);
+    protected SnakeCell(int gridX, int gridY) {
+        super(gridX, gridY);
     }
-    public void setPosition(float x, float y) {
-        super.setPosition(x, y);
+    public void setPosition(int gridX, int gridY) {
+        super.setPosition(gridX, gridY);
+    }
+    public void setPosition(Cell cell) {
+        _sprite.setPosition(cell._sprite.getX(), cell._sprite.getY());
     }
 }

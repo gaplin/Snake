@@ -4,19 +4,18 @@ import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Disposable;
-import snake.game.entities.cells.BrightTerrainCell;
-import snake.game.entities.cells.Cell;
-import snake.game.entities.cells.DarkTerrainCell;
-import snake.game.entities.cells.SnakeHeadCell;
+import snake.game.entities.cells.*;
 
 public class Assets implements Disposable {
     private static final AssetDescriptor<Texture> headTexture =
             new AssetDescriptor<>("snake/head.png", Texture.class);
+    private static final AssetDescriptor<Texture> bodyTexture =
+            new AssetDescriptor<>("snake/body.png", Texture.class);
     private static final AssetDescriptor<Texture> darkTerrainTexture =
-            new AssetDescriptor<>("map/terrain_dark.png", Texture.class);
+            new AssetDescriptor<>("terrain/dark.png", Texture.class);
 
     private static final AssetDescriptor<Texture> brightTerrainTexture =
-            new AssetDescriptor<>("map/terrain_bright.png", Texture.class);
+            new AssetDescriptor<>("terrain/bright.png", Texture.class);
     private final AssetManager _manager = new AssetManager();
 
     private static Assets instance;
@@ -31,6 +30,7 @@ public class Assets implements Disposable {
 
     public void load() {
         _manager.load(headTexture);
+        _manager.load(bodyTexture);
         _manager.load(brightTerrainTexture);
         _manager.load(darkTerrainTexture);
     }
@@ -48,6 +48,9 @@ public class Assets implements Disposable {
         }
         if(obj instanceof SnakeHeadCell) {
             return _manager.get(headTexture);
+        }
+        if(obj instanceof SnakeBodyCell) {
+            return _manager.get(bodyTexture);
         }
         return null;
     }
