@@ -10,7 +10,8 @@ import snake.game.enums.Direction;
 
 import static com.badlogic.gdx.Input.Keys;
 import static snake.game.enums.Direction.*;
-import static snake.utils.GlobalVariables.*;
+import static snake.utils.GlobalVariables.CELL_HEIGHT;
+import static snake.utils.GlobalVariables.CELL_WIDTH;
 
 public class Snake {
     /*
@@ -50,7 +51,9 @@ public class Snake {
         }
         _newDirection = direction;
     }
-    public void move() {
+    public void move(int width, int height) {
+        width *= CELL_WIDTH;
+        height *= CELL_HEIGHT;
         for(int i = _cells.size - 1; i > 0; --i) {
             _cells.get(i).setPosition(_cells.get(i - 1));
         }
@@ -71,12 +74,12 @@ public class Snake {
             case Left -> x -= CELL_WIDTH;
         }
         if(x < 0) {
-            x = WIDTH - CELL_WIDTH;
-        } else if(x >= WIDTH) {
+            x = width - CELL_WIDTH;
+        } else if(x >= width) {
             x = 0;
         } else if(y < 0) {
-            y = HEIGHT - CELL_HEIGHT;
-        } else if(y >= HEIGHT) {
+            y = height - CELL_HEIGHT;
+        } else if(y >= height) {
             y = 0;
         }
         head.setPosition(x, y);
@@ -85,10 +88,10 @@ public class Snake {
     private void addCell(float px, float py) {
         _cells.add(new SnakeBodyCell(px, py));
     }
-    public void moveAndAddCell() {
+    public void moveAndAddCell(int width, int height) {
         var lastCell = _cells.get(_cells.size - 1);
         float lastX = lastCell.getX(), lastY = lastCell.getY();
-        move();
+        move(width, height);
         addCell(lastX, lastY);
     }
 

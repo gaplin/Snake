@@ -11,6 +11,7 @@ import static snake.utils.GlobalVariables.*;
 
 public class GameManager {
     private final SpriteBatch _batch;
+    private static final int width = WIDTH / CELL_WIDTH, height = HEIGHT / CELL_HEIGHT;
     private Board _board;
     private Snake _snake;
 
@@ -24,7 +25,7 @@ public class GameManager {
     }
 
     public void init() {
-        _board = new Board(WIDTH / CELL_WIDTH, HEIGHT / CELL_HEIGHT);
+        _board = new Board(width, height);
         _snake = new Snake();
         setFreeRandomPosition(_point);
     }
@@ -40,11 +41,11 @@ public class GameManager {
 
     private void makeAMove() {
         if(_pointCollected) {
-            _snake.moveAndAddCell();
+            _snake.moveAndAddCell(width, height);
             setFreeRandomPosition(_point);
             _pointCollected = false;
         } else {
-            _snake.move();
+            _snake.move(width, height);
         }
         checkCollisions();
     }
@@ -64,7 +65,6 @@ public class GameManager {
     }
 
     private void setFreeRandomPosition(PointCell cell) {
-        int width = _board.getWidth(), height = _board.getHeight();
         do {
             cell.setPosition(MathUtils.random.nextInt(width), MathUtils.random.nextInt(height));
         }while(CollisionChecker.isCollidingWithSnake(cell, _snake));
