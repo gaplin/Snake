@@ -2,6 +2,7 @@ package snake.game.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import snake.game.entities.cells.snake.SnakeBodyCell;
 import snake.game.entities.cells.snake.SnakeCell;
@@ -20,11 +21,10 @@ public class Snake {
     private final Array<SnakeCell> _cells = new Array<>();
     private Direction _direction;
     private Direction _newDirection = null;
-    private static final int _initialBodySize = 9, startX = 10, startY = 10;
 
-    public Snake() {
+    public Snake(int startX, int startY, int initialSize) {
         _cells.add(new SnakeHeadCell(startX, startY));
-        for(int i = 1; i <= _initialBodySize; ++i) {
+        for(int i = 1; i <= initialSize - 1; ++i) {
             _cells.add(new SnakeBodyCell(startX - i, startY));
         }
         _direction = Right;
@@ -51,9 +51,16 @@ public class Snake {
         }
         _newDirection = direction;
     }
-    public void move(int width, int height) {
+    /*
+    returns position of last bodyCell before move
+     */
+    public Vector2 move(int width, int height) {
+        var lastBodyCell = _cells.get(_cells.size - 1);
+        var prevPosition = new Vector2(lastBodyCell.getX(), lastBodyCell.getY());
+
         width *= CELL_WIDTH;
         height *= CELL_HEIGHT;
+
         for(int i = _cells.size - 1; i > 0; --i) {
             _cells.get(i).setPosition(_cells.get(i - 1));
         }
@@ -83,18 +90,17 @@ public class Snake {
             y = 0;
         }
         head.setPosition(x, y);
+
+        return prevPosition;
     }
 
-    private void addCell(float px, float py) {
+    public void addCell(float px, float py) {
         _cells.add(new SnakeBodyCell(px, py));
     }
-    public void moveAndAddCell(int width, int height) {
-        var lastCell = _cells.get(_cells.size - 1);
-        float lastX = lastCell.getX(), lastY = lastCell.getY();
-        move(width, height);
-        addCell(lastX, lastY);
-    }
 
+    public int getSize() {
+        return _cells.size;
+    }
     public Array<SnakeCell> getCells() {
         return _cells;
     }

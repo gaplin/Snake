@@ -2,6 +2,7 @@ package snake.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import snake.game.entities.Board;
 import snake.game.entities.Snake;
 import snake.game.entities.cells.pickup.PointCell;
@@ -12,12 +13,12 @@ import static snake.utils.GlobalVariables.*;
 public class GameManager {
     private final SpriteBatch _batch;
     private static final int width = WIDTH / CELL_WIDTH, height = HEIGHT / CELL_HEIGHT;
+    private static final int initialSnakeSize = 10;
     private Board _board;
     private Snake _snake;
 
     private final PointCell _point = new PointCell(0, 0);
     private static final float _moveCoolDown = 0.07f;
-    private boolean _pointCollected = false;
     private float _timeFromLastMove = 0.0f;
     public GameManager(SpriteBatch batch) {
         _batch = batch;
@@ -26,7 +27,7 @@ public class GameManager {
 
     public void init() {
         _board = new Board(width, height);
-        _snake = new Snake();
+        _snake = new Snake(initialSnakeSize - 1, height / 2, initialSnakeSize);
         setFreeRandomPosition(_point);
     }
 
@@ -40,19 +41,18 @@ public class GameManager {
     }
 
     private void makeAMove() {
-        if(_pointCollected) {
-            _snake.moveAndAddCell(width, height);
-            _pointCollected = false;
-        } else {
-            _snake.move(width, height);
-        }
-        checkCollisions();
+        var lastCellPosition = _snake.move(width, height);
+        checkCollisions(lastCellPosition);
     }
 
-    private void checkCollisions() {
+    private void checkCollisions(Vector2 lastCellPosition) {
         if(CollisionChecker.isCollidingWithSnake(_point, _snake)) {
-            _pointCollected = true;
-            setFreeRandomPosition(_point);
+            _snake.addCell(lastCellPosition.x, lastCellPosition.y);
+            if(_snake.getSize() < height * width) {
+                setFreeRandomPosition(_point);
+            } else {
+                _point.setVisible(false);
+            }
         }
         if(CollisionChecker.isCollidingWithItself(_snake)) {
             gameOver();
@@ -60,7 +60,7 @@ public class GameManager {
     }
 
     private void gameOver() {
-        _snake = new Snake();
+        _snake = new Snake(initialSnakeSize - 1, height / 2, initialSnakeSize);
         setFreeRandomPosition(_point);
     }
 
@@ -68,6 +68,7 @@ public class GameManager {
         do {
             cell.setPosition(MathUtils.random.nextInt(width), MathUtils.random.nextInt(height));
         }while(CollisionChecker.isCollidingWithSnake(cell, _snake));
+        _point.setVisible(true);
     }
     public void render() {
         _board.render(_batch);
