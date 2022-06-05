@@ -42,7 +42,6 @@ public class GameManager {
     private void makeAMove() {
         if(_pointCollected) {
             _snake.moveAndAddCell(width, height);
-            setFreeRandomPosition(_point);
             _pointCollected = false;
         } else {
             _snake.move(width, height);
@@ -53,6 +52,7 @@ public class GameManager {
     private void checkCollisions() {
         if(CollisionChecker.isCollidingWithSnake(_point, _snake)) {
             _pointCollected = true;
+            setFreeRandomPosition(_point);
         }
         if(CollisionChecker.isCollidingWithItself(_snake)) {
             gameOver();
