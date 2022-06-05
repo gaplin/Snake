@@ -2,13 +2,12 @@ package snake.game.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import snake.game.entities.cells.BrightTerrainCell;
-import snake.game.entities.cells.DarkTerrainCell;
-import snake.game.entities.cells.TerrainCell;
+import snake.game.entities.cells.terrain.BrightTerrainCell;
+import snake.game.entities.cells.terrain.DarkTerrainCell;
+import snake.game.entities.cells.terrain.TerrainCell;
 
 public class Board {
     private final Array<Array<TerrainCell>> _cells = new Array<>();
-    private Snake _snake;
     public Board(int width, int height) {
         for (int i = 0; i < height; ++i) {
             _cells.add(new Array<>());
@@ -18,8 +17,12 @@ public class Board {
         }
     }
 
-    public void setSnake(Snake snake) {
-        _snake = snake;
+    public int getWidth() {
+        return _cells.get(0).size;
+    }
+
+    public int getHeight() {
+        return _cells.size;
     }
 
     public void render(SpriteBatch batch) {

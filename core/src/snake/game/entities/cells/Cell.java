@@ -11,15 +11,27 @@ import static snake.utils.GlobalVariables.CELL_WIDTH;
 public abstract class Cell {
     protected final Sprite _sprite = new Sprite(Assets.getInstance().getTexture(this), CELL_WIDTH, CELL_HEIGHT);
 
-    protected Cell(int gridX, int gridY) {
+    public Cell(int gridX, int gridY) {
         setPosition(gridX, gridY);
     }
+    public Cell(float px, float py) {
+        setPosition(px, py);
+    }
 
-    protected void setPosition(int gridX, int gridY) {
+    public void setPosition(int gridX, int gridY) {
         var posInPixels = Helper.gridTpPixels(gridX, gridY);
         _sprite.setPosition(posInPixels.x, posInPixels.y);
     }
+    public void setPosition(float px, float py) {
+        _sprite.setPosition(px, py);
+    }
+    public void setPosition(Cell cell) {
+        _sprite.setPosition(cell.getX(), cell.getY());
+    }
 
+    public boolean collidesWith(Cell other) {
+        return _sprite.getBoundingRectangle().overlaps(other._sprite.getBoundingRectangle());
+    }
     public float getX() {
         return _sprite.getX();
     }

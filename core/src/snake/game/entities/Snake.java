@@ -3,9 +3,9 @@ package snake.game.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import snake.game.entities.cells.SnakeBodyCell;
-import snake.game.entities.cells.SnakeCell;
-import snake.game.entities.cells.SnakeHeadCell;
+import snake.game.entities.cells.snake.SnakeBodyCell;
+import snake.game.entities.cells.snake.SnakeCell;
+import snake.game.entities.cells.snake.SnakeHeadCell;
 import snake.game.enums.Direction;
 
 import static com.badlogic.gdx.Input.Keys;
@@ -82,6 +82,19 @@ public class Snake {
         head.setPosition(x, y);
     }
 
+    private void addCell(float px, float py) {
+        _cells.add(new SnakeBodyCell(px, py));
+    }
+    public void moveAndAddCell() {
+        var lastCell = _cells.get(_cells.size - 1);
+        float lastX = lastCell.getX(), lastY = lastCell.getY();
+        move();
+        addCell(lastX, lastY);
+    }
+
+    public Array<SnakeCell> getCells() {
+        return _cells;
+    }
     public void render(SpriteBatch batch) {
         for(var cell : _cells) {
             cell.draw(batch);
