@@ -1,4 +1,4 @@
-package snake.game.enums;
+package snake.enums;
 
 public enum Direction {
     Up,

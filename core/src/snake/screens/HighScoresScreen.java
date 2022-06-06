@@ -1,8 +1,14 @@
 package snake.screens;
 
 import com.badlogic.gdx.Screen;
+import snake.SnakeGame;
 
-public class HIghScoresScreen implements Screen {
+public class HighScoresScreen implements Screen {
+    private final SnakeGame _game;
+
+    public HighScoresScreen(SnakeGame game) {
+        _game = game;
+    }
     @Override
     public void show() {
 

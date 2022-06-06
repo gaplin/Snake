@@ -4,13 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import snake.enums.Direction;
 import snake.game.entities.cells.snake.SnakeBodyCell;
 import snake.game.entities.cells.snake.SnakeCell;
 import snake.game.entities.cells.snake.SnakeHeadCell;
-import snake.game.enums.Direction;
 
 import static com.badlogic.gdx.Input.Keys;
-import static snake.game.enums.Direction.*;
+import static snake.enums.Direction.*;
 import static snake.utils.GlobalVariables.CELL_HEIGHT;
 import static snake.utils.GlobalVariables.CELL_WIDTH;
 
