@@ -19,7 +19,8 @@ public class Snake {
      */
     private final Array<SnakeCell> _cells = new Array<>();
     private Direction _direction;
-    private Direction _newDirection = null;
+    private Direction _directionIn1Step = null;
+    private Direction _directionIn2Steps = null;
 
     public Snake(int startX, int startY, int initialSize) {
         _cells.add(new SnakeHeadCell(startX, startY));
@@ -44,10 +45,11 @@ public class Snake {
 
         var head = (SnakeHeadCell)_cells.get(0);
 
-        if(_newDirection != null) {
-            head.rotate(prev(_newDirection) == _direction);
-            _direction = _newDirection;
-            _newDirection = null;
+        if(_directionIn1Step != null) {
+            head.rotate(prev(_directionIn1Step) == _direction);
+            _direction = _directionIn1Step;
+            _directionIn1Step = _directionIn2Steps;
+            _directionIn2Steps = null;
         }
 
         float x = head.getX(), y = head.getY();
@@ -83,12 +85,19 @@ public class Snake {
         return _direction;
     }
 
-    public Direction getNewDirection() {
-        return _newDirection;
+    public Direction getDirectionIn1Step() {
+        return _directionIn1Step;
     }
 
-    public void setNewDirection(Direction direction) {
-        _newDirection = direction;
+    public void setDirectionIn1Step(Direction direction) {
+        _directionIn1Step = direction;
+    }
+
+    public void setDirectionIn2Steps(Direction direction) {
+        _directionIn2Steps = direction;
+    }
+    public Direction getDirectionIn2Steps() {
+        return _directionIn2Steps;
     }
 
     public void setDead() {

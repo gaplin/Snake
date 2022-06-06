@@ -29,10 +29,14 @@ public class SnakeKeyboardController extends SnakeController {
     }
     private void changeDirection(Direction direction) {
         var currentDirection = _snake.getDirection();
-        var newDirection = _snake.getNewDirection();
-        if(newDirection != null || direction == currentDirection || opposite(currentDirection, direction)) {
-            return;
+        var directionIn1Step = _snake.getDirectionIn1Step();
+        var directionIn2Steps = _snake.getDirectionIn2Steps();
+        if(directionIn1Step != null) {
+            if(directionIn2Steps == null && direction != directionIn1Step && ! opposite(direction, directionIn1Step)) {
+                _snake.setDirectionIn2Steps(direction);
+            }
+        } else if(direction != currentDirection && !opposite(currentDirection, direction)) {
+            _snake.setDirectionIn1Step(direction);
         }
-        _snake.setNewDirection(direction);
     }
 }

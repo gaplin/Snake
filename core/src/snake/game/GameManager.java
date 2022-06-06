@@ -22,7 +22,7 @@ public class GameManager {
     private boolean _gameEnded = false;
 
     private final PointCell _point = new PointCell(0, 0);
-    private static final float _moveCoolDown = 0.07f;
+    private static final float _moveCoolDown = 0.12f;
     private float _timeFromLastMove = 0.0f;
 
     private final SnakeController _snakeController;
