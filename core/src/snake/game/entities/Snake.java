@@ -8,11 +8,11 @@ import snake.enums.Direction;
 import snake.game.entities.cells.snake.SnakeBodyCell;
 import snake.game.entities.cells.snake.SnakeCell;
 import snake.game.entities.cells.snake.SnakeHeadCell;
+import snake.utils.GlobalVariables;
 
 import static com.badlogic.gdx.Input.Keys;
 import static snake.enums.Direction.*;
-import static snake.utils.GlobalVariables.CELL_HEIGHT;
-import static snake.utils.GlobalVariables.CELL_WIDTH;
+import static snake.utils.GlobalVariables.CELL_SIZE;
 
 public class Snake {
     /*
@@ -31,16 +31,16 @@ public class Snake {
     }
 
     public void handleKeyboard() {
-        if(Gdx.input.isKeyJustPressed(Keys.W)) {
+        if(Gdx.input.isKeyJustPressed(Keys.W) || Gdx.input.isKeyJustPressed(Keys.UP)) {
             changeDirection(Up);
         }
-        else if(Gdx.input.isKeyJustPressed(Keys.D)) {
+        else if(Gdx.input.isKeyJustPressed(Keys.D) || Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
             changeDirection(Right);
         }
-        else if(Gdx.input.isKeyJustPressed(Keys.S)) {
+        else if(Gdx.input.isKeyJustPressed(Keys.S) || Gdx.input.isKeyJustPressed(Keys.DOWN)) {
             changeDirection(Down);
         }
-        else if(Gdx.input.isKeyJustPressed(Keys.A)) {
+        else if(Gdx.input.isKeyJustPressed(Keys.A) || Gdx.input.isKeyJustPressed(Keys.LEFT)) {
             changeDirection(Left);
         }
     }
@@ -58,8 +58,8 @@ public class Snake {
         var lastBodyCell = _cells.get(_cells.size - 1);
         var prevPosition = new Vector2(lastBodyCell.getX(), lastBodyCell.getY());
 
-        width *= CELL_WIDTH;
-        height *= CELL_HEIGHT;
+        width *= GlobalVariables.CELL_SIZE;
+        height *= CELL_SIZE;
 
         for(int i = _cells.size - 1; i > 0; --i) {
             _cells.get(i).setPosition(_cells.get(i - 1));
@@ -75,17 +75,17 @@ public class Snake {
 
         float x = head.getX(), y = head.getY();
         switch (_direction) {
-            case Up -> y += CELL_HEIGHT;
-            case Right -> x += CELL_WIDTH;
-            case Down -> y -= CELL_HEIGHT;
-            case Left -> x -= CELL_WIDTH;
+            case Up -> y += CELL_SIZE;
+            case Right -> x += GlobalVariables.CELL_SIZE;
+            case Down -> y -= CELL_SIZE;
+            case Left -> x -= GlobalVariables.CELL_SIZE;
         }
         if(x < 0) {
-            x = width - CELL_WIDTH;
+            x = width - GlobalVariables.CELL_SIZE;
         } else if(x >= width) {
             x = 0;
         } else if(y < 0) {
-            y = height - CELL_HEIGHT;
+            y = height - CELL_SIZE;
         } else if(y >= height) {
             y = 0;
         }

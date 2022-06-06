@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import snake.SnakeGame;
 import snake.game.GameManager;
 import snake.utils.Assets;
+import snake.utils.GlobalVariables;
 
 import static snake.utils.GlobalVariables.*;
 
@@ -50,7 +51,7 @@ public class GameScreen implements Screen {
         _stage.addActor(_button);
 
         _pointImage.setScale(1.8f);
-        _pointImage.setPosition(WIDTH / 2f - 2.8f * CELL_WIDTH, HEIGHT - 2.3f * CELL_HEIGHT);
+        _pointImage.setPosition(WIDTH / 2f - 2.8f * GlobalVariables.CELL_SIZE, HEIGHT - 2.3f * CELL_SIZE);
 
         _gameManager = new GameManager(_game.batch());
     }
@@ -68,7 +69,7 @@ public class GameScreen implements Screen {
 
         _gameManager.render();
         _pointImage.draw(_game.batch(), 1.0f);
-        _font.draw(_game.batch(), Integer.toString(_gameManager.getScore()), _pointImage.getX() + 3.8f * CELL_WIDTH, _pointImage.getY() + 1.3f * CELL_HEIGHT);
+        _font.draw(_game.batch(), Integer.toString(_gameManager.getScore()), _pointImage.getX() + 3.8f * GlobalVariables.CELL_SIZE, _pointImage.getY() + 1.3f * CELL_SIZE);
 
         if(_gameManager.gameEnded()) {
             _font.draw(_game.batch(), _gameManager.gameWon() ? "YOU WON!" : "YOU LOST!", WIDTH / 3f, HEIGHT / 5f * 4);

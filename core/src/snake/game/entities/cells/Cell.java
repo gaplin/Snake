@@ -3,13 +3,13 @@ package snake.game.entities.cells;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import snake.utils.Assets;
+import snake.utils.GlobalVariables;
 import snake.utils.Helper;
 
-import static snake.utils.GlobalVariables.CELL_HEIGHT;
-import static snake.utils.GlobalVariables.CELL_WIDTH;
+import static snake.utils.GlobalVariables.CELL_SIZE;
 
 public abstract class Cell {
-    protected final Sprite _sprite = new Sprite(Assets.getInstance().getTexture(this), CELL_WIDTH, CELL_HEIGHT);
+    protected final Sprite _sprite = new Sprite(Assets.getInstance().getTexture(this), GlobalVariables.CELL_SIZE, CELL_SIZE);
 
     public Cell(int gridX, int gridY) {
         setPosition(gridX, gridY);
