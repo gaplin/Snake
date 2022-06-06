@@ -1,6 +1,5 @@
 package snake.game.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -10,8 +9,8 @@ import snake.game.entities.cells.snake.SnakeCell;
 import snake.game.entities.cells.snake.SnakeHeadCell;
 import snake.utils.GlobalVariables;
 
-import static com.badlogic.gdx.Input.Keys;
-import static snake.enums.Direction.*;
+import static snake.enums.Direction.Right;
+import static snake.enums.Direction.prev;
 import static snake.utils.GlobalVariables.CELL_SIZE;
 
 public class Snake {
@@ -28,28 +27,6 @@ public class Snake {
             _cells.add(new SnakeBodyCell(startX - i, startY));
         }
         _direction = Right;
-    }
-
-    public void handleKeyboard() {
-        if(Gdx.input.isKeyJustPressed(Keys.W) || Gdx.input.isKeyJustPressed(Keys.UP)) {
-            changeDirection(Up);
-        }
-        else if(Gdx.input.isKeyJustPressed(Keys.D) || Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
-            changeDirection(Right);
-        }
-        else if(Gdx.input.isKeyJustPressed(Keys.S) || Gdx.input.isKeyJustPressed(Keys.DOWN)) {
-            changeDirection(Down);
-        }
-        else if(Gdx.input.isKeyJustPressed(Keys.A) || Gdx.input.isKeyJustPressed(Keys.LEFT)) {
-            changeDirection(Left);
-        }
-    }
-
-    private void changeDirection(Direction direction) {
-        if(_newDirection != null || direction == _direction || opposite(_direction, direction)) {
-            return;
-        }
-        _newDirection = direction;
     }
     /*
     returns position of last bodyCell before move
@@ -101,6 +78,19 @@ public class Snake {
     public int getSize() {
         return _cells.size;
     }
+
+    public Direction getDirection() {
+        return _direction;
+    }
+
+    public Direction getNewDirection() {
+        return _newDirection;
+    }
+
+    public void setNewDirection(Direction direction) {
+        _newDirection = direction;
+    }
+
     public Array<SnakeCell> getCells() {
         return _cells;
     }

@@ -3,6 +3,8 @@ package snake.game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import snake.game.controllers.SnakeController;
+import snake.game.controllers.SnakeKeyboardController;
 import snake.game.entities.Board;
 import snake.game.entities.Snake;
 import snake.game.entities.cells.pickup.PointCell;
@@ -13,7 +15,7 @@ public class GameManager {
     private final SpriteBatch _batch;
     private static final int boardWidth = 16, boardHeight = 16;
     private static final int initialSnakeSize = 3;
-    private Board _board;
+    private final Board _board;
     private Snake _snake;
     private int _score = 0;
 
@@ -22,19 +24,18 @@ public class GameManager {
     private final PointCell _point = new PointCell(0, 0);
     private static final float _moveCoolDown = 0.07f;
     private float _timeFromLastMove = 0.0f;
+
+    private final SnakeController _snakeController;
     public GameManager(SpriteBatch batch) {
         _batch = batch;
-        init();
-    }
-
-    public void init() {
         _board = new Board(boardWidth, boardHeight);
         _snake = new Snake(initialSnakeSize - 1, boardHeight / 2, initialSnakeSize);
+        _snakeController = new SnakeKeyboardController(_snake);
         setFreeRandomPosition(_point);
     }
 
     public void step(float delta) {
-        _snake.handleKeyboard();
+        _snakeController.handleInputEvent();
         _timeFromLastMove += delta;
         if(_timeFromLastMove >= _moveCoolDown) {
             makeAMove();
@@ -75,6 +76,7 @@ public class GameManager {
 
     public void restart() {
         _snake = new Snake(initialSnakeSize - 1, boardHeight / 2, initialSnakeSize);
+        _snakeController.setSnake(_snake);
         setFreeRandomPosition(_point);
         _gameEnded = false;
         _score = 0;
