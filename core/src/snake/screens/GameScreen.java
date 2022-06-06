@@ -69,7 +69,7 @@ public class GameScreen implements Screen {
 
         _gameManager.render();
         _pointImage.draw(_game.batch(), 1.0f);
-        _font.draw(_game.batch(), Integer.toString(_gameManager.getScore()), _pointImage.getX() + 3.8f * GlobalVariables.CELL_SIZE, _pointImage.getY() + 1.3f * CELL_SIZE);
+        _font.draw(_game.batch(), Integer.toString(_gameManager.getScore()), _pointImage.getX() + 2.3f * GlobalVariables.CELL_SIZE, _pointImage.getY() + 1.3f * CELL_SIZE);
 
         if(_gameManager.gameEnded()) {
             _font.draw(_game.batch(), _gameManager.gameWon() ? "YOU WON!" : "YOU LOST!", WIDTH / 3f, HEIGHT / 5f * 4);
