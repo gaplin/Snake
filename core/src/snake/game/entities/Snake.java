@@ -91,6 +91,12 @@ public class Snake {
         _newDirection = direction;
     }
 
+    public void setDead() {
+        for(var cell : _cells) {
+            cell.setDead();
+        }
+    }
+
     public Array<SnakeCell> getCells() {
         return _cells;
     }

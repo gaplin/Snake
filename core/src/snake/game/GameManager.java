@@ -70,6 +70,7 @@ public class GameManager {
             }
         }
         if(CollisionChecker.isCollidingWithItself(_snake)) {
+            _snake.setDead();
             gameOver();
         }
     }
