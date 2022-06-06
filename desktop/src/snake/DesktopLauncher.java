@@ -11,6 +11,7 @@ public class DesktopLauncher {
 		config.setWindowedMode(GlobalVariables.WIDTH, GlobalVariables.HEIGHT);
 		config.setTitle("Snake");
 		config.setResizable(false);
+		config.setWindowIcon("icons/window.png");
 		new Lwjgl3Application(new SnakeGame(), config);
 	}
 }
