@@ -17,6 +17,8 @@ public class GameManager {
     private Snake _snake;
     private int _score = 0;
 
+    private boolean _gameEnded = false;
+
     private final PointCell _point = new PointCell(0, 0);
     private static final float _moveCoolDown = 0.07f;
     private float _timeFromLastMove = 0.0f;
@@ -40,9 +42,19 @@ public class GameManager {
         }
     }
 
+    public boolean gameEnded() {
+        return _gameEnded;
+    }
+
+    public boolean gameWon() {
+        return _snake.getSize() == boardWidth * boardHeight;
+    }
+
     private void makeAMove() {
-        var lastCellPosition = _snake.move(boardWidth, boardHeight);
-        handleCollisions(lastCellPosition);
+        if(!_gameEnded) {
+            var lastCellPosition = _snake.move(boardWidth, boardHeight);
+            handleCollisions(lastCellPosition);
+        }
     }
 
     private void handleCollisions(Vector2 lastCellPosition) {
@@ -53,6 +65,7 @@ public class GameManager {
                 setFreeRandomPosition(_point);
             } else {
                 _point.setVisible(false);
+                gameOver();
             }
         }
         if(CollisionChecker.isCollidingWithItself(_snake)) {
@@ -60,10 +73,14 @@ public class GameManager {
         }
     }
 
-    private void gameOver() {
+    public void restart() {
         _snake = new Snake(initialSnakeSize - 1, boardHeight / 2, initialSnakeSize);
         setFreeRandomPosition(_point);
+        _gameEnded = false;
         _score = 0;
+    }
+    private void gameOver() {
+        _gameEnded = true;
     }
 
     private void setFreeRandomPosition(PointCell cell) {

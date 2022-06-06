@@ -105,8 +105,8 @@ public class Snake {
         return _cells;
     }
     public void render(SpriteBatch batch) {
-        for(var cell : _cells) {
-            cell.draw(batch);
+        for(int i = _cells.size - 1; i >= 0; --i) {
+            _cells.get(i).draw(batch);
         }
     }
 }

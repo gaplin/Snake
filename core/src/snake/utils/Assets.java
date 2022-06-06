@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Disposable;
 import snake.game.entities.cells.Cell;
 import snake.game.entities.cells.pickup.PointCell;
@@ -27,6 +28,9 @@ public class Assets implements Disposable {
 
     public static final AssetDescriptor<BitmapFont> MonoFont =
             new AssetDescriptor<>("fonts/Mono.fnt", BitmapFont.class);
+
+    public static final AssetDescriptor<Skin> ComicSkin =
+            new AssetDescriptor<>("skins/comic-ui.json", Skin.class);
     private final AssetManager _manager = new AssetManager();
 
     private static Assets instance;
@@ -46,6 +50,7 @@ public class Assets implements Disposable {
         _manager.load(DarkTerrainTexture);
         _manager.load(PointTexture);
         _manager.load(MonoFont);
+        _manager.load(ComicSkin);
     }
 
     public void finishLoading() {

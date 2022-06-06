@@ -23,9 +23,4 @@ public class CollisionChecker {
         }
         return false;
     }
-
-    public static boolean isCollidingWithHead(Cell cell, Snake snake) {
-        var head = snake.getCells().get(0);
-        return cell.collidesWith(head);
-    }
 }
