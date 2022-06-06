@@ -3,6 +3,7 @@ package snake.utils;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.Disposable;
 import snake.game.entities.cells.Cell;
 import snake.game.entities.cells.pickup.PointCell;
@@ -12,17 +13,20 @@ import snake.game.entities.cells.terrain.BrightTerrainCell;
 import snake.game.entities.cells.terrain.DarkTerrainCell;
 
 public class Assets implements Disposable {
-    private static final AssetDescriptor<Texture> headTexture =
+    public static final AssetDescriptor<Texture> HeadTexture =
             new AssetDescriptor<>("snake/head.png", Texture.class);
-    private static final AssetDescriptor<Texture> bodyTexture =
+    public static final AssetDescriptor<Texture> BodyTexture =
             new AssetDescriptor<>("snake/body.png", Texture.class);
-    private static final AssetDescriptor<Texture> darkTerrainTexture =
+    public static final AssetDescriptor<Texture> DarkTerrainTexture =
             new AssetDescriptor<>("terrain/dark.png", Texture.class);
 
-    private static final AssetDescriptor<Texture> brightTerrainTexture =
+    public static final AssetDescriptor<Texture> BrightTerrainTexture =
             new AssetDescriptor<>("terrain/bright.png", Texture.class);
-    private static final AssetDescriptor<Texture> pointTexture =
+    public static final AssetDescriptor<Texture> PointTexture =
             new AssetDescriptor<>("pickup/point.png", Texture.class);
+
+    public static final AssetDescriptor<BitmapFont> MonoFont =
+            new AssetDescriptor<>("fonts/Mono.fnt", BitmapFont.class);
     private final AssetManager _manager = new AssetManager();
 
     private static Assets instance;
@@ -36,11 +40,12 @@ public class Assets implements Disposable {
     private Assets() {}
 
     public void load() {
-        _manager.load(headTexture);
-        _manager.load(bodyTexture);
-        _manager.load(brightTerrainTexture);
-        _manager.load(darkTerrainTexture);
-        _manager.load(pointTexture);
+        _manager.load(HeadTexture);
+        _manager.load(BodyTexture);
+        _manager.load(BrightTerrainTexture);
+        _manager.load(DarkTerrainTexture);
+        _manager.load(PointTexture);
+        _manager.load(MonoFont);
     }
 
     public void finishLoading() {
@@ -49,21 +54,25 @@ public class Assets implements Disposable {
 
     public Texture getTexture(Cell obj) {
         if(obj instanceof DarkTerrainCell) {
-            return _manager.get(darkTerrainTexture);
+            return _manager.get(DarkTerrainTexture);
         }
         if(obj instanceof BrightTerrainCell) {
-            return _manager.get(brightTerrainTexture);
+            return _manager.get(BrightTerrainTexture);
         }
         if(obj instanceof SnakeHeadCell) {
-            return _manager.get(headTexture);
+            return _manager.get(HeadTexture);
         }
         if(obj instanceof SnakeBodyCell) {
-            return _manager.get(bodyTexture);
+            return _manager.get(BodyTexture);
         }
         if(obj instanceof PointCell) {
-            return _manager.get(pointTexture);
+            return _manager.get(PointTexture);
         }
         return null;
+    }
+
+    public <T> T get(AssetDescriptor<T> assetDescriptor) {
+        return _manager.get(assetDescriptor);
     }
 
     @Override

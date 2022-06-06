@@ -10,6 +10,8 @@ public class SnakeGame extends Game {
 	private Assets _assets;
 	private SpriteBatch _batch;
 
+	private GameScreen _gameScreen;
+
 	@Override
 	public void create () {
 		_assets = Assets.getInstance();
@@ -18,8 +20,9 @@ public class SnakeGame extends Game {
 		_assets.finishLoading();
 
 		_batch = new SpriteBatch();
+		_gameScreen = new GameScreen(this);
 
-		setScreen(new GameScreen(this));
+		setScreen(_gameScreen);
 	}
 
 	public SpriteBatch batch() {
@@ -35,5 +38,6 @@ public class SnakeGame extends Game {
 	public void dispose () {
 		_assets.dispose();
 		_batch.dispose();
+		_gameScreen.dispose();
 	}
 }

@@ -8,14 +8,14 @@ import snake.game.entities.Snake;
 import snake.game.entities.cells.pickup.PointCell;
 import snake.utils.CollisionChecker;
 
-import static snake.utils.GlobalVariables.*;
 
 public class GameManager {
     private final SpriteBatch _batch;
-    private static final int width = WIDTH / CELL_WIDTH, height = HEIGHT / CELL_HEIGHT;
-    private static final int initialSnakeSize = 10;
+    private static final int boardWidth = 16, boardHeight = 16;
+    private static final int initialSnakeSize = 3;
     private Board _board;
     private Snake _snake;
+    private int _score = 0;
 
     private final PointCell _point = new PointCell(0, 0);
     private static final float _moveCoolDown = 0.07f;
@@ -26,8 +26,8 @@ public class GameManager {
     }
 
     public void init() {
-        _board = new Board(width, height);
-        _snake = new Snake(initialSnakeSize - 1, height / 2, initialSnakeSize);
+        _board = new Board(boardWidth, boardHeight);
+        _snake = new Snake(initialSnakeSize - 1, boardHeight / 2, initialSnakeSize);
         setFreeRandomPosition(_point);
     }
 
@@ -41,14 +41,15 @@ public class GameManager {
     }
 
     private void makeAMove() {
-        var lastCellPosition = _snake.move(width, height);
-        checkCollisions(lastCellPosition);
+        var lastCellPosition = _snake.move(boardWidth, boardHeight);
+        handleCollisions(lastCellPosition);
     }
 
-    private void checkCollisions(Vector2 lastCellPosition) {
+    private void handleCollisions(Vector2 lastCellPosition) {
         if(CollisionChecker.isCollidingWithSnake(_point, _snake)) {
+            ++_score;
             _snake.addCell(lastCellPosition.x, lastCellPosition.y);
-            if(_snake.getSize() < height * width) {
+            if(_snake.getSize() < boardHeight * boardWidth) {
                 setFreeRandomPosition(_point);
             } else {
                 _point.setVisible(false);
@@ -60,15 +61,19 @@ public class GameManager {
     }
 
     private void gameOver() {
-        _snake = new Snake(initialSnakeSize - 1, height / 2, initialSnakeSize);
+        _snake = new Snake(initialSnakeSize - 1, boardHeight / 2, initialSnakeSize);
         setFreeRandomPosition(_point);
+        _score = 0;
     }
 
     private void setFreeRandomPosition(PointCell cell) {
         do {
-            cell.setPosition(MathUtils.random.nextInt(width), MathUtils.random.nextInt(height));
+            cell.setPosition(MathUtils.random.nextInt(boardWidth), MathUtils.random.nextInt(boardHeight));
         }while(CollisionChecker.isCollidingWithSnake(cell, _snake));
         _point.setVisible(true);
+    }
+    public int getScore() {
+        return _score;
     }
     public void render() {
         _board.render(_batch);
