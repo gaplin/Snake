@@ -30,7 +30,7 @@ public class Assets implements Disposable {
             new AssetDescriptor<>("fonts/Mono.fnt", BitmapFont.class);
 
     public static final AssetDescriptor<Skin> ComicSkin =
-            new AssetDescriptor<>("skins/comic-ui.json", Skin.class);
+            new AssetDescriptor<>("skins/comic/comic-ui.json", Skin.class);
     private final AssetManager _manager = new AssetManager();
 
     private static Assets instance;
