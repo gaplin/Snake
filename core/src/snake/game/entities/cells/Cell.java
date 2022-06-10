@@ -4,13 +4,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import snake.utils.Assets;
-import snake.utils.GlobalVariables;
 import snake.utils.Helper;
 
 import static snake.utils.GlobalVariables.CELL_SIZE;
 
 public abstract class Cell {
-    protected final Sprite _sprite = new Sprite(Assets.getInstance().getTexture(this), GlobalVariables.CELL_SIZE, CELL_SIZE);
+    protected final Sprite _sprite = new Sprite(Assets.getInstance().getTexture(this), CELL_SIZE, CELL_SIZE);
 
     protected Cell(int gridX, int gridY) {
         setPosition(gridX, gridY);
@@ -24,7 +23,7 @@ public abstract class Cell {
     }
 
     public void setPosition(int gridX, int gridY) {
-        var posInPixels = Helper.gridTpPixels(gridX, gridY);
+        var posInPixels = Helper.gridToPixels(gridX, gridY);
         _sprite.setPosition(posInPixels.x, posInPixels.y);
     }
     public void setPosition(float px, float py) {
