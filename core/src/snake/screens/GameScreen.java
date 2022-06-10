@@ -67,7 +67,7 @@ public class GameScreen implements Screen {
 
         _game.batch().begin();
 
-        _gameManager.render();
+        _gameManager.draw();
         _pointImage.draw(_game.batch(), 1.0f);
         _font.draw(_game.batch(), Integer.toString(_gameManager.getScore()), _pointImage.getX() + 2.3f * GlobalVariables.CELL_SIZE, _pointImage.getY() + 1.3f * CELL_SIZE);
 

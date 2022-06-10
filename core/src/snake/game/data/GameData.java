@@ -7,10 +7,12 @@ import snake.game.entities.cells.pickup.PointCell;
 import snake.game.entities.cells.pickup.expiringPickup.ExpiringPickupCell;
 
 public class GameData {
-    public Board board;
-    public Snake snake;
-    public int score, maxExpiringPickups, maxPointPickups;
-    public float moveCoolDown, pickupCoolDown, pickupChance;
+    public final Board board;
+    public final Snake snake;
+    public int score;
+    public final int maxExpiringPickups, maxPointPickups;
+    public float moveCoolDown;
+    public final float pickupCoolDown, pickupChance;
 
     public boolean gameEnded;
 

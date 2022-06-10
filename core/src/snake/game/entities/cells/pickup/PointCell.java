@@ -5,9 +5,6 @@ import snake.game.data.GameData;
 
 
 public class PointCell extends PickupCell {
-    public PointCell(int gridX, int gridY) {
-        super(gridX, gridY);
-    }
     public PointCell(Vector2 position) {
         super(position);
     }
@@ -16,9 +13,5 @@ public class PointCell extends PickupCell {
     public void act(GameData gameData) {
         ++gameData.score;
         gameData.snake.increaseSize();
-    }
-
-    public void setVisible(boolean visible) {
-        _sprite.setAlpha(visible ? 1f : 0f);
     }
 }

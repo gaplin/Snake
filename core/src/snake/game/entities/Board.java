@@ -27,7 +27,7 @@ public class Board {
     public Array<Array<TerrainCell>> getBoard() {
         return _cells;
     }
-    public void render(SpriteBatch batch) {
+    public void draw(SpriteBatch batch) {
         for(var row : _cells) {
             for(var cell : row) {
                 cell.draw(batch);

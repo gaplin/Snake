@@ -4,10 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import snake.game.data.GameData;
 
 public class SpeedDownCell extends ExpiringPickupCell {
-    public SpeedDownCell(int gridX, int gridY) {
-        super(gridX, gridY);
-    }
-
     public SpeedDownCell(Vector2 position) {
         super(position);
     }

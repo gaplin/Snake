@@ -111,7 +111,7 @@ public class Snake {
     public Array<SnakeCell> getCells() {
         return _cells;
     }
-    public void render(SpriteBatch batch) {
+    public void draw(SpriteBatch batch) {
         for(int i = _cells.size - 1; i >= 0; --i) {
             _cells.get(i).draw(batch);
         }

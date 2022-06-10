@@ -58,9 +58,9 @@ public class GameManager {
     public int getScore() {
         return _gameData.score;
     }
-    public void render() {
-        _gameData.board.render(_batch);
-        _gameData.snake.render(_batch);
+    public void draw() {
+        _gameData.board.draw(_batch);
+        _gameData.snake.draw(_batch);
         for(var pickup : _gameData.pointPickups) {
             pickup.draw(_batch);
         }
