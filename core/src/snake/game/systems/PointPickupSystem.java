@@ -1,4 +1,4 @@
-package snake.game.Systems;
+package snake.game.systems;
 
 import snake.game.data.GameData;
 import snake.game.entities.cells.pickup.PointCell;

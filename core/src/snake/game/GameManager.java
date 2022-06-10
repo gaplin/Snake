@@ -2,15 +2,15 @@ package snake.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import snake.factories.IExpiringPickupFactory;
+import snake.factories.ExpiringPickupFactory;
 import snake.factories.RandomExpiringPickupFactory;
 import snake.factories.SpeedDownFactory;
 import snake.factories.SpeedUpFactory;
-import snake.game.Systems.*;
 import snake.game.controllers.SnakeKeyboardController;
 import snake.game.data.GameData;
 import snake.game.entities.Board;
 import snake.game.entities.Snake;
+import snake.game.systems.*;
 
 
 public class GameManager {
@@ -20,7 +20,7 @@ public class GameManager {
     private static final float initialMoveCoolDown = 0.12f, initialPickupCoolDown = 5f, pickupChance = 0.7f;
     private GameData _gameData;
 
-    private final IExpiringPickupFactory _pickupFactory;
+    private final ExpiringPickupFactory _pickupFactory;
 
     private final Array<GameSystem> systems = new Array<>();
     public GameManager(SpriteBatch batch) {
