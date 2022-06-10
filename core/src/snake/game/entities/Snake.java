@@ -1,13 +1,11 @@
 package snake.game.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import snake.enums.Direction;
 import snake.game.entities.cells.snake.SnakeBodyCell;
 import snake.game.entities.cells.snake.SnakeCell;
 import snake.game.entities.cells.snake.SnakeHeadCell;
-import snake.utils.GlobalVariables;
 
 import static snake.enums.Direction.Right;
 import static snake.enums.Direction.prev;
@@ -18,9 +16,9 @@ public class Snake {
     head at index 0
      */
     private final Array<SnakeCell> _cells = new Array<>();
-    private Direction _direction;
-    private Direction _directionIn1Step = null;
-    private Direction _directionIn2Steps = null;
+    private Direction _direction, _directionIn1Step = null, _directionIn2Steps = null;
+
+    private float lastPosX, lastPosY;
 
     public Snake(int startX, int startY, int initialSize) {
         _cells.add(new SnakeHeadCell(startX, startY));
@@ -32,11 +30,12 @@ public class Snake {
     /*
     returns position of last bodyCell before move
      */
-    public Vector2 move(int width, int height) {
+    public void move(int width, int height) {
         var lastBodyCell = _cells.get(_cells.size - 1);
-        var prevPosition = new Vector2(lastBodyCell.getX(), lastBodyCell.getY());
+        lastPosX = lastBodyCell.getX();
+        lastPosY = lastBodyCell.getY();
 
-        width *= GlobalVariables.CELL_SIZE;
+        width *=  CELL_SIZE;
         height *= CELL_SIZE;
 
         for(int i = _cells.size - 1; i > 0; --i) {
@@ -55,12 +54,12 @@ public class Snake {
         float x = head.getX(), y = head.getY();
         switch (_direction) {
             case Up -> y += CELL_SIZE;
-            case Right -> x += GlobalVariables.CELL_SIZE;
+            case Right -> x += CELL_SIZE;
             case Down -> y -= CELL_SIZE;
-            case Left -> x -= GlobalVariables.CELL_SIZE;
+            case Left -> x -= CELL_SIZE;
         }
         if(x < 0) {
-            x = width - GlobalVariables.CELL_SIZE;
+            x = width - CELL_SIZE;
         } else if(x >= width) {
             x = 0;
         } else if(y < 0) {
@@ -70,11 +69,10 @@ public class Snake {
         }
         head.setPosition(x, y);
 
-        return prevPosition;
     }
 
-    public void addCell(float px, float py) {
-        _cells.add(new SnakeBodyCell(px, py));
+    public void increaseSize() {
+        _cells.add(new SnakeBodyCell(lastPosX, lastPosY));
     }
 
     public int getSize() {
@@ -104,6 +102,10 @@ public class Snake {
         for(var cell : _cells) {
             cell.setDead();
         }
+    }
+
+    public SnakeHeadCell getHead() {
+        return (SnakeHeadCell) _cells.get(0);
     }
 
     public Array<SnakeCell> getCells() {

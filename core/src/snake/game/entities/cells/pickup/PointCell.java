@@ -1,10 +1,21 @@
 package snake.game.entities.cells.pickup;
 
-import snake.game.entities.cells.Cell;
+import com.badlogic.gdx.math.Vector2;
+import snake.game.data.GameData;
 
-public class PointCell extends Cell {
+
+public class PointCell extends PickupCell {
     public PointCell(int gridX, int gridY) {
         super(gridX, gridY);
+    }
+    public PointCell(Vector2 position) {
+        super(position);
+    }
+
+    @Override
+    public void act(GameData gameData) {
+        ++gameData.score;
+        gameData.snake.increaseSize();
     }
 
     public void setVisible(boolean visible) {

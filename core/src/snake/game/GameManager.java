@@ -1,103 +1,71 @@
 package snake.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
-import snake.game.controllers.SnakeController;
+import com.badlogic.gdx.utils.Array;
+import snake.game.Systems.*;
 import snake.game.controllers.SnakeKeyboardController;
+import snake.game.data.GameData;
 import snake.game.entities.Board;
 import snake.game.entities.Snake;
-import snake.game.entities.cells.pickup.PointCell;
-import snake.utils.CollisionChecker;
 
 
 public class GameManager {
     private final SpriteBatch _batch;
-    private static final int boardWidth = 16, boardHeight = 16;
+    private static final int boardWidth = 16, boardHeight = 16, maxPointPickups = 2, maxExpiringPickups = 2;
     private static final int initialSnakeSize = 3;
-    private final Board _board;
-    private Snake _snake;
-    private int _score = 0;
+    private static final float initialMoveCoolDown = 0.12f, initialPickupCoolDown = 5f, pickupChance = 0.7f;
+    private GameData _gameData;
 
-    private boolean _gameEnded = false;
-
-    private final PointCell _point = new PointCell(0, 0);
-    private static final float _moveCoolDown = 0.12f;
-    private float _timeFromLastMove = 0.0f;
-
-    private final SnakeController _snakeController;
+    private final Array<GameSystem> systems = new Array<>();
     public GameManager(SpriteBatch batch) {
         _batch = batch;
-        _board = new Board(boardWidth, boardHeight);
-        _snake = new Snake(initialSnakeSize - 1, boardHeight / 2, initialSnakeSize);
-        _snakeController = new SnakeKeyboardController(_snake);
-        setFreeRandomPosition(_point);
+        init();
+    }
+
+    private void init() {
+        var board = new Board(boardWidth, boardHeight);
+        var snake = new Snake(initialSnakeSize - 1, boardHeight / 2, initialSnakeSize);
+        var snakeController = new SnakeKeyboardController(snake);
+
+        _gameData = new GameData(board, snake,
+                maxExpiringPickups, maxPointPickups,
+                initialMoveCoolDown, initialPickupCoolDown, pickupChance);
+
+        systems.add(new SnakeMovementSystem(_gameData, snakeController));
+        systems.add(new CollisionSystem(_gameData));
+        systems.add(new PointPickupSystem(_gameData));
+        systems.add(new ExpiringPickupSystem(_gameData));
     }
 
     public void step(float delta) {
-        _snakeController.handleInputEvent();
-        _timeFromLastMove += delta;
-        if(_timeFromLastMove >= _moveCoolDown) {
-            makeAMove();
-            _timeFromLastMove = 0;
+        for(var system : systems) {
+            system.act(delta);
         }
     }
 
     public boolean gameEnded() {
-        return _gameEnded;
+        return _gameData.gameEnded;
     }
 
     public boolean gameWon() {
-        return _snake.getSize() == boardWidth * boardHeight;
+        return _gameData.snake.getSize() == boardWidth * boardHeight;
     }
-
-    private void makeAMove() {
-        if(!_gameEnded) {
-            var lastCellPosition = _snake.move(boardWidth, boardHeight);
-            handleCollisions(lastCellPosition);
-        }
-    }
-
-    private void handleCollisions(Vector2 lastCellPosition) {
-        if(CollisionChecker.isCollidingWithSnake(_point, _snake)) {
-            ++_score;
-            _snake.addCell(lastCellPosition.x, lastCellPosition.y);
-            if(_snake.getSize() < boardHeight * boardWidth) {
-                setFreeRandomPosition(_point);
-            } else {
-                _point.setVisible(false);
-                gameOver();
-            }
-        }
-        if(CollisionChecker.isCollidingWithItself(_snake)) {
-            _snake.setDead();
-            gameOver();
-        }
-    }
-
     public void restart() {
-        _snake = new Snake(initialSnakeSize - 1, boardHeight / 2, initialSnakeSize);
-        _snakeController.setSnake(_snake);
-        setFreeRandomPosition(_point);
-        _gameEnded = false;
-        _score = 0;
-    }
-    private void gameOver() {
-        _gameEnded = true;
+        systems.clear();
+        init();
     }
 
-    private void setFreeRandomPosition(PointCell cell) {
-        do {
-            cell.setPosition(MathUtils.random.nextInt(boardWidth), MathUtils.random.nextInt(boardHeight));
-        }while(CollisionChecker.isCollidingWithSnake(cell, _snake));
-        _point.setVisible(true);
-    }
     public int getScore() {
-        return _score;
+        return _gameData.score;
     }
     public void render() {
-        _board.render(_batch);
-        _snake.render(_batch);
-        _point.draw(_batch);
+        _gameData.board.render(_batch);
+        _gameData.snake.render(_batch);
+        for(var pickup : _gameData.pointPickups) {
+            pickup.draw(_batch);
+        }
+        for(var pickup : _gameData.expiringPickups) {
+            pickup.draw(_batch);
+        }
     }
 }

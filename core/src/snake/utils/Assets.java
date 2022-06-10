@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Disposable;
 import snake.game.entities.cells.Cell;
 import snake.game.entities.cells.pickup.PointCell;
+import snake.game.entities.cells.pickup.expiringPickup.SpeedDownCell;
+import snake.game.entities.cells.pickup.expiringPickup.SpeedUpCell;
 import snake.game.entities.cells.snake.SnakeBodyCell;
 import snake.game.entities.cells.snake.SnakeHeadCell;
 import snake.game.entities.cells.terrain.BrightTerrainCell;
@@ -25,6 +27,12 @@ public class Assets implements Disposable {
             new AssetDescriptor<>("terrain/bright.png", Texture.class);
     public static final AssetDescriptor<Texture> PointTexture =
             new AssetDescriptor<>("pickup/point.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> SpeedUpTexture =
+            new AssetDescriptor<>("pickup/speedup.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> SpeedDownTexture =
+            new AssetDescriptor<>("pickup/speeddown.png", Texture.class);
 
     public static final AssetDescriptor<BitmapFont> MonoFont =
             new AssetDescriptor<>("fonts/Mono.fnt", BitmapFont.class);
@@ -49,6 +57,8 @@ public class Assets implements Disposable {
         _manager.load(BrightTerrainTexture);
         _manager.load(DarkTerrainTexture);
         _manager.load(PointTexture);
+        _manager.load(SpeedUpTexture);
+        _manager.load(SpeedDownTexture);
         _manager.load(MonoFont);
         _manager.load(ComicSkin);
     }
@@ -72,6 +82,12 @@ public class Assets implements Disposable {
         }
         if(obj instanceof PointCell) {
             return _manager.get(PointTexture);
+        }
+        if(obj instanceof SpeedUpCell) {
+            return _manager.get(SpeedUpTexture);
+        }
+        if(obj instanceof SpeedDownCell) {
+            return _manager.get(SpeedDownTexture);
         }
         return null;
     }

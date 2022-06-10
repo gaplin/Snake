@@ -16,6 +16,17 @@ public class Board {
             }
         }
     }
+
+    public int getWidth() {
+        return _cells.get(0).size;
+    }
+    public int getHeight() {
+        return _cells.size;
+    }
+
+    public Array<Array<TerrainCell>> getBoard() {
+        return _cells;
+    }
     public void render(SpriteBatch batch) {
         for(var row : _cells) {
             for(var cell : row) {

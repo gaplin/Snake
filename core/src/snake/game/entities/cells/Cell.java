@@ -2,6 +2,7 @@ package snake.game.entities.cells;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import snake.utils.Assets;
 import snake.utils.GlobalVariables;
 import snake.utils.Helper;
@@ -11,11 +12,15 @@ import static snake.utils.GlobalVariables.CELL_SIZE;
 public abstract class Cell {
     protected final Sprite _sprite = new Sprite(Assets.getInstance().getTexture(this), GlobalVariables.CELL_SIZE, CELL_SIZE);
 
-    public Cell(int gridX, int gridY) {
+    protected Cell(int gridX, int gridY) {
         setPosition(gridX, gridY);
     }
-    public Cell(float px, float py) {
+    protected Cell(float px, float py) {
         setPosition(px, py);
+    }
+
+    public Cell(Vector2 position) {
+        _sprite.setPosition(position.x, position.y);
     }
 
     public void setPosition(int gridX, int gridY) {
@@ -37,6 +42,10 @@ public abstract class Cell {
     }
     public float getY() {
         return _sprite.getY();
+    }
+
+    public Vector2 getPosition() {
+        return new Vector2(_sprite.getX(), _sprite.getY());
     }
 
     public void draw(SpriteBatch batch) {
