@@ -1,22 +1,20 @@
 package snake.game.Systems;
 
 import com.badlogic.gdx.math.MathUtils;
-import snake.factories.RandomExpiringPickupFactory;
-import snake.factories.SpeedDownFactory;
-import snake.factories.SpeedUpFactory;
+import snake.factories.IExpiringPickupFactory;
 import snake.game.data.GameData;
 import snake.game.entities.cells.pickup.expiringPickup.ExpiringPickupCell;
 import snake.utils.CollisionChecker;
 
 public class ExpiringPickupSystem implements GameSystem {
     private final GameData _gameData;
-    private final RandomExpiringPickupFactory _factory;
+    private final IExpiringPickupFactory _factory;
 
     private float _lastPickup = 0.0f;
 
-    public ExpiringPickupSystem(GameData gameData) {
+    public ExpiringPickupSystem(GameData gameData, IExpiringPickupFactory factory) {
         _gameData = gameData;
-        _factory = new RandomExpiringPickupFactory(new SpeedUpFactory(), new SpeedDownFactory());
+        _factory = factory;
     }
 
     @Override

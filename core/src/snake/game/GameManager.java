@@ -2,6 +2,10 @@ package snake.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import snake.factories.IExpiringPickupFactory;
+import snake.factories.RandomExpiringPickupFactory;
+import snake.factories.SpeedDownFactory;
+import snake.factories.SpeedUpFactory;
 import snake.game.Systems.*;
 import snake.game.controllers.SnakeKeyboardController;
 import snake.game.data.GameData;
@@ -16,9 +20,12 @@ public class GameManager {
     private static final float initialMoveCoolDown = 0.12f, initialPickupCoolDown = 5f, pickupChance = 0.7f;
     private GameData _gameData;
 
+    private final IExpiringPickupFactory _pickupFactory;
+
     private final Array<GameSystem> systems = new Array<>();
     public GameManager(SpriteBatch batch) {
         _batch = batch;
+        _pickupFactory = new RandomExpiringPickupFactory(new SpeedUpFactory(), new SpeedDownFactory());
         init();
     }
 
@@ -34,7 +41,7 @@ public class GameManager {
         systems.add(new SnakeMovementSystem(_gameData, snakeController));
         systems.add(new CollisionSystem(_gameData));
         systems.add(new PointPickupSystem(_gameData));
-        systems.add(new ExpiringPickupSystem(_gameData));
+        systems.add(new ExpiringPickupSystem(_gameData, _pickupFactory));
     }
 
     public void step(float delta) {
