@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import snake.game.entities.cells.pickup.expiringPickup.ExpiringPickupCell;
 
-public class RandomExpiringPickupFactory implements IRandomExpiringPickupFactory {
+public class RandomExpiringPickupFactory implements IExpiringPickupFactory {
     private final Array<IExpiringPickupFactory> _pickupFactories = new Array<>();
     public RandomExpiringPickupFactory(IExpiringPickupFactory...factories) {
         for(var factory : factories) {
