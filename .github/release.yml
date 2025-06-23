@@ -6,6 +6,9 @@ changelog:
     - title: Bug Fixes
       labels:
         - bug
+    - title: Updated dependencies
+      labels:
+        - dependencies
     - title: Other Changes
       labels:
         - "*"
