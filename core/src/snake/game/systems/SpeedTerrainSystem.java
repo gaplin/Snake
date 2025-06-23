@@ -44,8 +44,10 @@ public class SpeedTerrainSystem extends GameSystem {
             } else {
                 newCell = new SandCell(col, row);
             }
-            _speedCells.add(newCell);
-            board.getCells().get(row).set(col, newCell);
+            if(notAlreadySpeedCell(newCell)) {
+                _speedCells.add(newCell);
+                board.getCells().get(row).set(col, newCell);
+            }
         }
     }
 
@@ -62,9 +64,20 @@ public class SpeedTerrainSystem extends GameSystem {
             } else {
                 newCell = new SandCell(col, row);
             }
-            _speedCells.add(newCell);
-            board.getCells().get(row).set(col, newCell);
+            if(notAlreadySpeedCell(newCell)) {
+                _speedCells.add(newCell);
+                board.getCells().get(row).set(col, newCell);
+            }
         }
+    }
+
+    private boolean notAlreadySpeedCell(SpeedTerrainCell cell) {
+        for(var other : _speedCells) {
+            if(other.collidesWith(cell)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
