@@ -1,5 +1,4 @@
 changelog:
-  exclude:
   categories:
     - title: New Features
       labels:
