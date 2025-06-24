@@ -16,6 +16,8 @@ public class HPDecreaseCell extends ExpiringPickupCell{
     public void act(GameData gameData) {
         if(!gameData.GodMode) {
             --gameData.lives;
+        } else {
+            ++gameData.lives;
         }
     }
 }
