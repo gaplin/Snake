@@ -32,7 +32,7 @@ public class ExpiringPickupSystem extends GameSystem {
     private void handlePickups(float delta) {
         var head = _gameData.snake.getHead();
         var pickups = _gameData.expiringPickups;
-        for(var pickup : pickups.toArray(ExpiringPickupCell.class)) {
+        for(var pickup : pickups.toArray(ExpiringPickupCell[]::new)) {
             pickup.addTime(delta);
             if(pickup.expired() ||
                     CollisionChecker.AnyPointPickupContains(_gameData.pointPickups, pickup) ||

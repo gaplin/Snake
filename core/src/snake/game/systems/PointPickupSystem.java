@@ -25,7 +25,7 @@ public class PointPickupSystem extends GameSystem {
     private void handlePickups() {
         var head = _gameData.snake.getHead();
         var pickups = _gameData.pointPickups;
-        for(var pickup : pickups.toArray(PointCell.class)) {
+        for(var pickup : pickups.toArray(PointCell[]::new)) {
             if(head.collidesWith(pickup)) {
                 pickup.act(_gameData);
                 pickups.removeValue(pickup, true);

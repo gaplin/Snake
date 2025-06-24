@@ -22,7 +22,7 @@ public class WallsSystem extends GameSystem {
     private void handleWalls() {
         var head = _gameData.snake.getHead();
         var walls = _gameData.walls;
-        for(var wall : walls.toArray(WallCell.class)) {
+        for(var wall : walls.toArray(WallCell[]::new)) {
             if(CollisionChecker.AnyPointPickupContains(_gameData.pointPickups, wall) ||
                 CollisionChecker.AnyTeleportContains(_gameData.teleports, wall)) {
                 walls.removeValue(wall, true);

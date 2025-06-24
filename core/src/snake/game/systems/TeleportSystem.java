@@ -31,7 +31,7 @@ public class TeleportSystem extends GameSystem{
 
     private void handleTeleports(SnakeHeadCell head) {
         var teleports = _gameData.teleports;
-        for(var teleport : teleports.toArray(TeleportCell.class)) {
+        for(var teleport : teleports.toArray(TeleportCell[]::new)) {
             if(CollisionChecker.AnyPointPickupContains(_gameData.pointPickups, teleport)) {
                 teleports.removeValue(teleport, true);
                 continue;
