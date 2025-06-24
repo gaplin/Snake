@@ -14,7 +14,11 @@ public class NegativePointCell extends ExpiringPickupCell {
         --gameData.score;
         var snake = gameData.snake;
         if(snake.getSize() == 1) {
-            --gameData.lives;
+            if(!gameData.GodMode) {
+                --gameData.lives;
+            } else {
+                ++gameData.lives;
+            }
         } else {
             snake.decreaseSize();
         }

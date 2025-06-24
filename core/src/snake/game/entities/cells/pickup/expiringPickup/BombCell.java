@@ -13,6 +13,8 @@ public class BombCell extends ExpiringPickupCell{
     public void act(GameData gameData) {
         if(!gameData.GodMode) {
             gameData.lives = -666;
+        } else {
+            ++gameData.lives;
         }
     }
 }
