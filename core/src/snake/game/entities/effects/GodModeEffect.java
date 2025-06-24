@@ -21,7 +21,7 @@ public class GodModeEffect extends RenewableEffect implements ActingEffect {
 
     @Override
     public void renew() {
-        _timeLeft = 10f;
+        _timeLeft += 10f;
     }
 
     @Override
