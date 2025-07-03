@@ -24,7 +24,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
         run: |
-          gh release create "$tag" "desktop/build/libs/desktop.jar#Snake.jar"\
+          gh release create "$tag" "desktop/build/libs/desktop-1.0.jar#Snake.jar"\
               --repo="$GITHUB_REPOSITORY" \
               --title="${tag#v}" \
               --generate-notes
