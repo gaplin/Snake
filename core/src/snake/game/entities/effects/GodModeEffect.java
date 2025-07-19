@@ -4,8 +4,9 @@ import com.badlogic.gdx.math.MathUtils;
 import snake.game.data.GameData;
 
 public class GodModeEffect extends RenewableEffect implements ActingEffect {
+    private static final float s_timeBonus = 9.0f;
     public GodModeEffect() {
-        super(10f);
+        super(s_timeBonus);
     }
 
     @Override
@@ -21,12 +22,13 @@ public class GodModeEffect extends RenewableEffect implements ActingEffect {
 
     @Override
     public void renew() {
-        _timeLeft += 10f;
+        _timeLeft += s_timeBonus;
     }
 
     @Override
     public void act(GameData gameData) {
-        var alpha = Math.max(0.1f, Math.abs(MathUtils.sin(_timeLeft * 4)));
+        var multiplier = _timeLeft >= 3.5f ? 4.0f : 6.0f;
+        var alpha = Math.max(0.1f, Math.abs(MathUtils.sin(_timeLeft * multiplier)));
         gameData.snake.setAlpha(alpha);
     }
 }
