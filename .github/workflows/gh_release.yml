@@ -19,12 +19,14 @@ jobs:
           distribution: 'adopt'
       - name: build jar
         run: ./gradlew desktop:dist
+      - name: move jar to current directory
+        run: mv desktop/build/libs/desktop-1.0.jar Snake.jar
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
         run: |
-          gh release create "$tag" "desktop/build/libs/desktop-1.0.jar#Snake.jar"\
+          gh release create "$tag" "Snake.jar#Snake.jar"\
               --repo="$GITHUB_REPOSITORY" \
               --title="${tag#v}" \
               --generate-notes
