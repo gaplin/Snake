@@ -15,7 +15,7 @@ public final class ClassicGameDataProvider {
             initialSnakeSize = 3,
             initialLives = 1,
             maxWalls = 0,
-            initialMaxPointPickups = 1,
+            initialMaxPointPickups = 3,
             initialMaxExpiringPickups = 0,
             minPointPickups = 1,
             minExpiringPickups = 0,
