@@ -10,12 +10,14 @@ import snake.game.entities.cells.pickup.expiringPickup.ExpiringPickupCell;
 import snake.game.entities.cells.terrain.TeleportCell;
 import snake.game.entities.cells.terrain.WallCell;
 import snake.game.entities.effects.Effect;
+import snake.game.systems.GameSystem;
 
-public class GameData {
+public final class GameData {
     public final Board board;
     public final Snake snake;
     public final SnakeController controller;
 
+    public final Array<GameSystem> systems = new Array<>();
     public final Array<WallCell> walls = new Array<>();
     public final Array<TeleportCell> teleports = new Array<>();
     public final Array<PointCell> pointPickups = new Array<>();
@@ -28,8 +30,6 @@ public class GameData {
     public final int minExpiringPickups, minPointPickups, maxWalls, maxTeleports, speedAreaLength, speedAreaCount;
     public float moveCoolDown, pickupCoolDown;
     public final float pickupChance, minMoveCoolDown, maxMoveCoolDown, minPickupCoolDown;
-
-
 
     public GameData(Board board, Snake snake, SnakeController controller, int maxPickups, int maxPointPickups,
                     int minExpiringPickups, int minPointPickups, int maxWalls, int speedAreaLength, float moveCoolDown,

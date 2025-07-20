@@ -12,19 +12,21 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import snake.SnakeGame;
 import snake.assets.Assets;
+import snake.enums.GameMode;
 import snake.enums.ScreenType;
+import snake.preferences.PreferencesManager;
 
 import static snake.GlobalVariables.BACKGROUND_COLOR;
 
 public class MenuScreen implements Screen {
     private final SnakeGame _game;
     private final Stage _stage;
-
+    private final PreferencesManager _preferencesManager;
     private final Table _table;
 
     public MenuScreen(SnakeGame game) {
         _game = game;
-
+        _preferencesManager = PreferencesManager.getInstance();
         _stage = new Stage();
 
         BitmapFont font = Assets.getInstance().get(Assets.MonoFont);
@@ -36,46 +38,65 @@ public class MenuScreen implements Screen {
         _table = new Table();
         _table.setFillParent(true);
 
-        TextButton play = new TextButton("Play", skin);
-        TextButton options = new TextButton("Options", skin);
-        TextButton controls = new TextButton("Controls", skin);
-        TextButton exit = new TextButton("Exit", skin);
+        TextButton playButton = new TextButton("Play", skin);
+        TextButton gameModeButton = new TextButton("Mode: " + _preferencesManager.getGameMode(), skin);
+        TextButton optionsButton = new TextButton("Options", skin);
+        TextButton controlsButton = new TextButton("Controls", skin);
+        TextButton exitButton = new TextButton("Exit", skin);
 
-        play.addListener(new ChangeListener() {
+        playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 _game.changeScreen(ScreenType.Game);
             }
         });
 
-        options.addListener(new ChangeListener() {
+        gameModeButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                var currentGameMode = _preferencesManager.getGameMode();
+                var currentIdx = currentGameMode.ordinal();
+                var values = GameMode.values();
+                var next = (currentIdx + 1) % values.length;
+                var newGameMode = values[next];
+                _preferencesManager.setGameMode(newGameMode);
+                gameModeButton.setText("Mode: " + newGameMode);
+            }
+        });
+        optionsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 _game.changeScreen(ScreenType.Options);
             }
         });
 
-        controls.addListener(new ChangeListener() {
+        controlsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 _game.changeScreen(ScreenType.Controls);
             }
         });
 
-        exit.addListener(new ChangeListener() {
+        exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.app.exit();
             }
         });
 
-        _table.add(play).fillX().uniform().width(250);
+        _table.add(playButton).fillX().uniform().width(250);
         _table.row().pad(50, 0, 0, 0);
-        _table.add(options).fillX().uniform().width(250);
+
+        _table.add(gameModeButton).fillX().uniform().width(300);
         _table.row().pad(50, 0, 0, 0);
-        _table.add(controls).fillX().uniform().width(250);
+
+        _table.add(optionsButton).fillX().uniform().width(250);
         _table.row().pad(50, 0, 0, 0);
-        _table.add(exit).fillX().uniform().width(250);
+
+        _table.add(controlsButton).fillX().uniform().width(250);
+        _table.row().pad(50, 0, 0, 0);
+
+        _table.add(exitButton).fillX().uniform().width(250);
         _table.row().pad(50, 0, 0, 0);
     }
 
